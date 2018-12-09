@@ -26,33 +26,29 @@ namespace frogger{
         return "Frogger";
     }
 
-    void Controller::on_mouse_move(Position screen_pos)
-    {
-        mouse_column_ = view_.screen_to_board(screen_pos).x;
-        mouse_row_ = view_.screen_to_board(screen_pos).y;
-    }
+    void Controller::on_key(ge211::Key key){
 
-    void Controller::on_mouse_down(Mouse_button btn, Position screen_posn)
-    {
-        if (model_.get_turn() == Player::neither) return;
-        if (btn != Mouse_button::left) return;
-
-        int col_no = view_.screen_to_board(screen_posn).x;
-        int row_no = view_.screen_to_board(screen_posn).y;
-        if (!model_.is_valid_row_col(row_no,col_no)) return;
-
-        posn selected = model_.selected();
-
-        bool is_selected = selected.x != -1 or selected.y != -1;
-
-        if (!is_selected) {
-            model_.select_pawn(row_no,col_no);
+        if(model_.state() == State::gameover or model_.state() == State::win){
+            return;
         }
-        else{
-            model_.place_pawn(row_no,col_no);
+
+        if (key == Key::right()){
+            model_.move_frog(Direction::right);
+        }
+        else if (key == Key::left()){
+            model_.move_frog(Direction::left);
+        }
+        else if (key == Key::down()){
+            model_.move_frog(Direction::down);
+        }
+        else if (key == Key::up()){
+            model_.move_frog(Direction::up);
         }
     }
 
+    void Controller::on_frame(double last_frame_seconds) {
+        model_.update(last_frame_seconds);
+    }
 
 }
 

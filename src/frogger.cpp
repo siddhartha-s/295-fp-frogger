@@ -3,5 +3,8 @@
 
 int main()
 {
-    ;
+    frogger::Controller c;
+    c.run();
+
+    return 0;
 }

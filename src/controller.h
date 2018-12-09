@@ -24,9 +24,6 @@ protected:
     //overrides the function which is when each frame is rendered/refreshed
     void on_frame(double last_frame_seconds) override;
 
-    //shows passage of time and triggers model time-based functions
-    void pass_time(double seconds);
-
 private:
     Model model_;
     View view_;
