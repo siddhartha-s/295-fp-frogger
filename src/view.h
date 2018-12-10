@@ -28,15 +28,15 @@ namespace frogger{
 
         /// The sprites.
 
-        ge211::Image_sprite const frog_left = ge211::Image_sprite("frog_left.png");
-        ge211::Image_sprite const frog_right = ge211::Image_sprite("frog_right.png");
-        ge211::Image_sprite const frog_up = ge211::Image_sprite("frog_up.png");
-        ge211::Image_sprite const frog_down = ge211::Image_sprite("frog_down.png");
+        ge211::Image_sprite const frog_left = ge211::Image_sprite("frog1_left.png");
+        ge211::Image_sprite const frog_right = ge211::Image_sprite("frog1_right.png");
+        ge211::Image_sprite const frog_up = ge211::Image_sprite("frog1_up.png");
+        ge211::Image_sprite const frog_down = ge211::Image_sprite("frog1_down.png");
 
-        ge211::Image_sprite const turtle_ = ge211::Image_sprite("turtle.png");
+        ge211::Image_sprite const turtle_ = ge211::Image_sprite("turtle2.png");
 
-        ge211::Image_sprite const log1_ = ge211::Image_sprite("log1.png");
-        ge211::Image_sprite const log2_ = ge211::Image_sprite("log2.png");
+        ge211::Image_sprite const log1_ = ge211::Image_sprite("log3.png");
+        ge211::Image_sprite const log2_ = ge211::Image_sprite("log4.png");
 
 
         ge211::Image_sprite const car1_ = ge211::Image_sprite("car1.png");

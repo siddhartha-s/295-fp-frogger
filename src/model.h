@@ -15,7 +15,7 @@ namespace frogger{
 
 
     //Amount of time allotted to play the game
-    const int GAME_TIME = 30;
+    const int GAME_TIME = 60;
 
     //the size of each cell of the game
     const int CELLSIZE = 25;
@@ -27,10 +27,13 @@ namespace frogger{
     const double GAMESCREEN_HEIGHT = 10*CELLSIZE;
     //velocity for object in each lane
 
-    const std::vector<double> lane_velocity = {0,45, -45,45,-45,0,45,45,45,0};
+    const std::vector<double> lane_velocity = {0,45,-45,90,-90,0,-45,75,-95,0};
 
     //dimensions for object in each lane
-    const std::vector<std::pair<double,double>> obstacle_dims = {{0,0},{30,25},{31,25},{29,25},{50,25},{0,0},{33,25},{87,25},{120,25},{0,0}};
+    const std::vector<std::pair<double,double>> obstacle_dims = {{0,0},{30,25},{31,25},{29,25},{50,25},{0,0},{25,25},{75,25},{100,25},{0,0}};
+
+    //number of obstacles per lan
+    const std::vector<int> obstacle_num = {0,2,2,2,1,0,3,1,1};
 
     //Represents the state of the game - whether the game is in progress or over.
     enum class State{

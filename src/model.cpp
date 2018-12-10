@@ -19,7 +19,7 @@ namespace frogger{
 
         //this is not put in a loop because you're setting the initial positions for obstacles.
         obstacles_[1].push_back({GAMESCREEN_WIDTH/7,GAMESCREEN_HEIGHT-(2*CELLSIZE)});
-        obstacles_[1].push_back({(4* GAMESCREEN_WIDTH)/7,GAMESCREEN_HEIGHT-(2*CELLSIZE)});
+        obstacles_[1].push_back({(5* GAMESCREEN_WIDTH)/7,GAMESCREEN_HEIGHT-(2*CELLSIZE)});
 
         obstacles_[2].push_back({GAMESCREEN_WIDTH/4,GAMESCREEN_HEIGHT-(3*CELLSIZE)});
         obstacles_[2].push_back({GAMESCREEN_WIDTH/2,GAMESCREEN_HEIGHT-(3*CELLSIZE)});
@@ -32,8 +32,6 @@ namespace frogger{
 
         obstacles_[6].push_back({0,3*CELLSIZE});
         obstacles_[6].push_back({obstacle_dims[4].first,3*CELLSIZE});
-        obstacles_[6].push_back({(GAMESCREEN_WIDTH/2)-obstacle_dims[4].first,3*CELLSIZE});
-        obstacles_[6].push_back({(GAMESCREEN_WIDTH/2),3*CELLSIZE});
         obstacles_[6].push_back({GAMESCREEN_WIDTH-(2*obstacle_dims[4].first),3*CELLSIZE});
         obstacles_[6].push_back({GAMESCREEN_WIDTH-obstacle_dims[4].first,3*CELLSIZE});
 
@@ -41,6 +39,7 @@ namespace frogger{
         obstacles_[7].push_back({GAMESCREEN_WIDTH-obstacle_dims[5].first,2*CELLSIZE});
 
         obstacles_[8].push_back({GAMESCREEN_WIDTH,CELLSIZE});
+
     }
 
     int Model::calculate_lane() const{
@@ -103,15 +102,19 @@ namespace frogger{
     void Model::move_frog(Direction motion){
         if(motion == Direction::up and is_move_valid(motion)){
             frog_.position_.y -= CELLSIZE;
+            frog_.direction_ = Direction::up;
         }
         else if(motion == Direction::down and is_move_valid(motion)){
             frog_.position_.y += CELLSIZE;
+            frog_.direction_ = Direction::down;
         }
         else if(motion == Direction::left and is_move_valid(motion)){
             frog_.position_.x -= CELLSIZE;
+            frog_.direction_ = Direction::left;
         }
         else if(motion == Direction::right and is_move_valid(motion)){
             frog_.position_.x += CELLSIZE;
+            frog_.direction_ = Direction::right;
         }
         update_score();
         int lane = calculate_lane();
@@ -196,22 +199,32 @@ namespace frogger{
         }
 
         size_t j=0;
+
         while (j < obstacles_[i].size()){
             if (obstacles_[i][j].x < -obstacle_dims[i].first and lane_velocity[i] < 0) {
                 auto curr_y = obstacles_[i][j].y;
-                obstacles_[i][j] = std::move(obstacles_[i].back());
+                //obstacles_[i][j] = std::move(obstacles_[i].back());
+                std::swap(obstacles_[i][j],obstacles_[i].back());
                 obstacles_[i].pop_back();
                 obstacles_[i].push_back({GAMESCREEN_WIDTH, curr_y});
             } else if (obstacles_[i][j].x > GAMESCREEN_WIDTH and lane_velocity[i] > 0) {
                 auto curr_y = obstacles_[i][j].y;
-                obstacles_[i][j] = std::move(obstacles_[i].back());
+                //obstacles_[i][j] = std::move(obstacles_[i].back());
+                std::swap(obstacles_[i][j],obstacles_[i].back());
                 obstacles_[i].pop_back();
-                obstacles_[i].push_back({-obstacle_dims[i].first, curr_y});
+                obstacles_[i].push_back({0-obstacle_dims[i].first, curr_y});
             } else{
                 i++;
             }
         }
 
+        /*
+        if(obstacles_[i].size()<obstacle_num[i]){
+            auto curr = obstacles_[i].size();
+
+            for(auto x = curr; i<obstacle_num[i];i++)
+        }
+        */
     }
 
     void Model::kill_frog(){
