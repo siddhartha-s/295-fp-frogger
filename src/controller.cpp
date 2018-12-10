@@ -9,10 +9,11 @@ namespace frogger{
     frogger::Controller::Controller()
             : model_()
             , view_(model_)
-    { }
+    {
+
+    }
 
     void Controller::draw(ge211::Sprite_set & set) {
-
         view_.draw(set);
     }
 
@@ -31,7 +32,6 @@ namespace frogger{
         if(model_.state() == State::gameover or model_.state() == State::win){
             return;
         }
-
         if (key == Key::right()){
             model_.move_frog(Direction::right);
         }
@@ -47,6 +47,9 @@ namespace frogger{
     }
 
     void Controller::on_frame(double last_frame_seconds) {
+        if(model_.state() == State::gameover or model_.state() == State::win){
+            return;
+        }
         model_.update(last_frame_seconds);
     }
 

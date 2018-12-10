@@ -322,23 +322,13 @@ close_code.h
 
 /Library/Frameworks/SDL2.framework/Headers/close_code.h
 
-/Users/sid/My-Projects/295-fp-frogger/src/controller.cpp
-controller.h
-/Users/sid/My-Projects/295-fp-frogger/src/controller.h
-iostream
--
-
-/Users/sid/My-Projects/295-fp-frogger/src/controller.h
+/Users/sid/My-Projects/295-fp-frogger/src/model.cpp
 model.h
 /Users/sid/My-Projects/295-fp-frogger/src/model.h
-view.h
-/Users/sid/My-Projects/295-fp-frogger/src/view.h
 ge211.h
 -
-
-/Users/sid/My-Projects/295-fp-frogger/src/frogger.cpp
-controller.h
-/Users/sid/My-Projects/295-fp-frogger/src/controller.h
+cassert
+-
 iostream
 -
 
@@ -348,17 +338,5 @@ ge211.h
 string
 -
 array
--
-
-/Users/sid/My-Projects/295-fp-frogger/src/view.cpp
-view.h
-/Users/sid/My-Projects/295-fp-frogger/src/view.h
-iostream
--
-
-/Users/sid/My-Projects/295-fp-frogger/src/view.h
-model.h
-/Users/sid/My-Projects/295-fp-frogger/src/model.h
-ge211.h
 -
 

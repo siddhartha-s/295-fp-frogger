@@ -14,23 +14,23 @@ namespace frogger{
     //MODEL CONSTANTS
 
 
-    //Amount of time alloted to play the game
-    const int GAME_TIME = 60;
+    //Amount of time allotted to play the game
+    const int GAME_TIME = 30;
 
     //the size of each cell of the game
     const int CELLSIZE = 25;
 
     //gamescreen width
-    const int GAMESCREEN_WIDTH = 14*CELLSIZE;
+    const double GAMESCREEN_WIDTH = 10*CELLSIZE;
 
     //gamescreen height
-    const int GAMESCREEN_HEIGHT = 10*CELLSIZE;
+    const double GAMESCREEN_HEIGHT = 10*CELLSIZE;
     //velocity for object in each lane
 
-    const std::vector<float> lane_velocity = {0,1.5f, -2.0f,1.7f,-2.5f,0,1.5f,2.0f,-2.7f,0};
+    const std::vector<double> lane_velocity = {0,45, -45,45,-45,0,45,45,45,0};
 
     //dimensions for object in each lane
-    const std::vector<std::pair<int,int>> obstacle_dims = {{0,0},{30,25},{31,25},{29,25},{50,25},{0,0},{33,25},{87,25},{120,25},{0,0}};
+    const std::vector<std::pair<double,double>> obstacle_dims = {{0,0},{30,25},{31,25},{29,25},{50,25},{0,0},{33,25},{87,25},{120,25},{0,0}};
 
     //Represents the state of the game - whether the game is in progress or over.
     enum class State{
@@ -54,7 +54,7 @@ namespace frogger{
 
         int lives() const { return lives_; }
 
-        float times_elapsed() const { return GAME_TIME - time_elapsed_; }
+        float times_left() const { return GAME_TIME - time_elapsed_; }
 
 
         //checks whether the flog has collided in `lane`
@@ -69,12 +69,12 @@ namespace frogger{
         void update(double dt);
 
         //getter for obstacle positions - to be used by view.
-        std::vector<std::vector<ge211::Position>> obstacles() const{
+        std::vector<std::vector<ge211::Basic_position<Coordinate>>> obstacles() const{
             return obstacles_;
         }
 
         //getter for frog position - to be used by view.
-        ge211::Position frog_position() const{
+        ge211::Basic_position<Coordinate> frog_position() const{
             return frog_.position_;
 
         }
@@ -102,10 +102,10 @@ namespace frogger{
 
         //A vector of vectors of positions of the "obstacles" ("obstacles" are vehicles in the road section, which need
         //to be avoided and logs and floating objects in the river section which need to be landed on.
-        std::vector<std::vector<ge211::Position>> obstacles_;
+        std::vector<std::vector<ge211::Basic_position<Coordinate>>> obstacles_;
 
         struct Frog {
-            ge211::Position position_;
+            ge211::Basic_position<Coordinate> position_;
             Direction direction_;
         };
 
