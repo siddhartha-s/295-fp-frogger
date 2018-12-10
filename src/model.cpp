@@ -201,30 +201,23 @@ namespace frogger{
         size_t j=0;
 
         while (j < obstacles_[i].size()){
-            if (obstacles_[i][j].x < -obstacle_dims[i].first and lane_velocity[i] < 0) {
+            if (obstacles_[i][j].x < -obstacle_dims[i].first and lane_velocity[i] < 0){
                 auto curr_y = obstacles_[i][j].y;
                 //obstacles_[i][j] = std::move(obstacles_[i].back());
                 std::swap(obstacles_[i][j],obstacles_[i].back());
                 obstacles_[i].pop_back();
                 obstacles_[i].push_back({GAMESCREEN_WIDTH, curr_y});
-            } else if (obstacles_[i][j].x > GAMESCREEN_WIDTH and lane_velocity[i] > 0) {
+            } else if (obstacles_[i][j].x > GAMESCREEN_WIDTH and lane_velocity[i] > 0){
                 auto curr_y = obstacles_[i][j].y;
                 //obstacles_[i][j] = std::move(obstacles_[i].back());
                 std::swap(obstacles_[i][j],obstacles_[i].back());
                 obstacles_[i].pop_back();
                 obstacles_[i].push_back({0-obstacle_dims[i].first, curr_y});
-            } else{
-                i++;
+                ++j;
+            }else{
+                ++j;
             }
         }
-
-        /*
-        if(obstacles_[i].size()<obstacle_num[i]){
-            auto curr = obstacles_[i].size();
-
-            for(auto x = curr; i<obstacle_num[i];i++)
-        }
-        */
     }
 
     void Model::kill_frog(){
