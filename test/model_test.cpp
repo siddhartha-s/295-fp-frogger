@@ -260,3 +260,37 @@ TEST_CASE("Checking whether frog dies if it reaches end of screen in river secti
     CHECK(frog_position2.y == GAMESCREEN_HEIGHT-CELLSIZE);
 
 }
+
+TEST_CASE("Testing a win situation"){
+    Model m;
+
+    m.move_frog(Direction::left);
+    m.move_frog(Direction::left);
+    m.move_frog(Direction::left);
+    m.move_frog(Direction::left);
+    m.move_frog(Direction::left);
+    m.move_frog(Direction::up);
+    m.move_frog(Direction::up);
+    m.move_frog(Direction::up);
+    m.move_frog(Direction::up);
+    m.move_frog(Direction::up);
+    m.move_frog(Direction::right);
+    m.move_frog(Direction::right);
+    m.move_frog(Direction::right);
+    m.move_frog(Direction::right);
+    m.move_frog(Direction::right);
+    m.move_frog(Direction::right);
+    CHECK(m.lives() == 3);
+    m.update(2);
+    m.move_frog(Direction::up);
+    CHECK(m.lives() == 3);//frog is on top of turtle
+    m.move_frog(Direction::up);
+    CHECK(m.lives() == 3);//frog is on top of first log
+    m.move_frog(Direction::up);
+    m.update(.25);
+    CHECK(m.lives() == 3);//frog is on top of first log
+    m.move_frog(Direction::up);
+    CHECK(m.call_calculate_lane()==9);
+    CHECK(m.state() == State::win);
+
+}
