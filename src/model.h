@@ -32,9 +32,6 @@ namespace frogger{
     //dimensions for object in each lane
     const std::vector<std::pair<double,double>> obstacle_dims = {{0,0},{30,25},{31,25},{29,25},{50,25},{0,0},{25,25},{75,25},{100,25},{0,0}};
 
-    //number of obstacles per lan
-    const std::vector<int> obstacle_num = {0,2,2,2,1,0,3,1,1};
-
     //Represents the state of the game - whether the game is in progress or over.
     enum class State{
         play, win, gameover
@@ -101,8 +98,6 @@ namespace frogger{
             return state_;
         }
     private:
-
-
         //A vector of vectors of positions of the "obstacles" ("obstacles" are vehicles in the road section, which need
         //to be avoided and logs and floating objects in the river section which need to be landed on.
         std::vector<std::vector<ge211::Basic_position<Coordinate>>> obstacles_;
@@ -141,8 +136,14 @@ namespace frogger{
         //reduces the lives left by 1 and resets frog's prosition to the bottom of the screen
         void kill_frog();
 
+        //checks whether the frog collides with a car or drowns in `curr_lane`; will call kill_frog()
+        // and update_game_state() if required.
+        void check_for_frog_death(int);
+
         /// Returns whether the coordinate is within bounds of screen.
         bool is_move_valid(Direction) const;
+
+
     };
 
 }

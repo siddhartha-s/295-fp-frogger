@@ -27,6 +27,7 @@ namespace frogger{
             sprites.add_sprite(curr_score,{(int)(GAMESCREEN_WIDTH/2 + 20),(int)(GAMESCREEN_HEIGHT)},1);
             return;
         }
+
         else if(model_.state()==State::win){
             auto const& sprite = you_win;
             sprites.add_sprite(you_win,{0,0},1);
@@ -39,6 +40,12 @@ namespace frogger{
         sprites.add_sprite(sprite,{0,0},1);
         sprites.add_sprite(sprite,{0,4*CELLSIZE},1);
         sprites.add_sprite(sprite,{0,(int)(GAMESCREEN_HEIGHT-CELLSIZE)},1);
+
+        //rendering river
+        auto const & sprite_river = river;
+        sprites.add_sprite(sprite_river,{0,CELLSIZE},1);
+        sprites.add_sprite(sprite_river,{0,2*CELLSIZE},1);
+        sprites.add_sprite(sprite_river,{0,3*CELLSIZE},1);
 
         //rendering obstacles
         std::vector<std::vector<ge211::Basic_position<Model::Coordinate>>> obstacles = model_.obstacles();

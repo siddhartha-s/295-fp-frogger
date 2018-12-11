@@ -12,12 +12,13 @@ namespace frogger{
     state_(State::play),
     highest_reached_(0),
     time_elapsed_(0.0)
+
     {
         for(int i = 0; i<10; i++){
             obstacles_.emplace_back();
         }
 
-        //this is not put in a loop because you're setting the initial positions for obstacles.
+        //this is not put in a loop because we're setting the initial positions for obstacles.
         obstacles_[1].push_back({GAMESCREEN_WIDTH/7,GAMESCREEN_HEIGHT-(2*CELLSIZE)});
         obstacles_[1].push_back({(5* GAMESCREEN_WIDTH)/7,GAMESCREEN_HEIGHT-(2*CELLSIZE)});
 
@@ -30,13 +31,11 @@ namespace frogger{
 
         obstacles_[4].push_back({GAMESCREEN_WIDTH/2,GAMESCREEN_HEIGHT-(5*CELLSIZE)});
 
-        obstacles_[6].push_back({0,3*CELLSIZE});
-        obstacles_[6].push_back({obstacle_dims[4].first,3*CELLSIZE});
-        obstacles_[6].push_back({GAMESCREEN_WIDTH-(2*obstacle_dims[4].first),3*CELLSIZE});
-        obstacles_[6].push_back({GAMESCREEN_WIDTH-obstacle_dims[4].first,3*CELLSIZE});
+        obstacles_[6].push_back({obstacle_dims[6].first,3*CELLSIZE});
+        obstacles_[6].push_back({GAMESCREEN_WIDTH-obstacle_dims[6].first,3*CELLSIZE});
 
         obstacles_[7].push_back({0,2*CELLSIZE});
-        obstacles_[7].push_back({GAMESCREEN_WIDTH-obstacle_dims[5].first,2*CELLSIZE});
+        obstacles_[7].push_back({GAMESCREEN_WIDTH-obstacle_dims[7].first,2*CELLSIZE});
 
         obstacles_[8].push_back({GAMESCREEN_WIDTH,CELLSIZE});
 
@@ -46,7 +45,7 @@ namespace frogger{
         return (9 - (int)(frog_.position_.y/CELLSIZE));
     }
 
-    void Model::update_score() {
+    void Model::update_score(){
         int curr_lane = calculate_lane();
         if (curr_lane > highest_reached_){
             score_ +=10;
@@ -58,14 +57,15 @@ namespace frogger{
         if(lane == 0 or lane == 5 or lane == 9){
             return false;
         }
-            for(auto &obstacle: obstacles_[lane]){
-                if(frog_.position_.x<obstacle.x+obstacle_dims[lane].first and
-                frog_.position_.x+CELLSIZE>obstacle.x and
-                frog_.position_.y < obstacle.y + obstacle_dims[lane].second and
-                frog_.position_.y + CELLSIZE > obstacle.y)
-                {
 
-                    return true;
+        for(auto &obstacle: obstacles_[lane]){
+            if(frog_.position_.x<obstacle.x+obstacle_dims[lane].first and
+            frog_.position_.x+CELLSIZE>obstacle.x and
+            frog_.position_.y < obstacle.y + obstacle_dims[lane].second and
+            frog_.position_.y + CELLSIZE > obstacle.y)
+            {
+
+                return true;
             }
         }
 
@@ -119,23 +119,12 @@ namespace frogger{
         update_score();
         int lane = calculate_lane();
 
-        bool check = false;
-        if(lane > 0 and lane <= 4){
-            check = frog_collide(lane);
-        }
-        else if(lane < 9 and lane >= 6){
-            check = frog_drown(lane);
-        }
-
-        if(check){
-            kill_frog();
-        }
-
-        update_game_state();
+        check_for_frog_death(lane);
     }
 
-    bool Model::frog_drown(int lane) {
-        return !(frog_collide(lane));
+    bool Model::frog_drown(int lane){
+
+        return !frog_collide(lane);
     }
 
     void Model::update(double const dt) {
@@ -147,26 +136,14 @@ namespace frogger{
             }
         }
 
-
         int curr_lane = calculate_lane();
 
         if (curr_lane > 5 and curr_lane <= 8) {
             frog_.position_.x += lane_velocity[curr_lane] * dt;
         }
 
-        bool check = false;
-        if(curr_lane > 0 and curr_lane <= 4){
-            check = frog_collide(curr_lane);
-        }
-        else if(curr_lane < 9 and curr_lane >= 6){
-            check = frog_drown(curr_lane);
-        }
-
-        if(check){
-            kill_frog();
-        }
+        check_for_frog_death(curr_lane);
         update_score();
-        update_game_state();
 
         if(curr_lane>5){
             if (lane_velocity[curr_lane]<0){
@@ -203,13 +180,11 @@ namespace frogger{
         while (j < obstacles_[i].size()){
             if (obstacles_[i][j].x < -obstacle_dims[i].first and lane_velocity[i] < 0){
                 auto curr_y = obstacles_[i][j].y;
-                //obstacles_[i][j] = std::move(obstacles_[i].back());
                 std::swap(obstacles_[i][j],obstacles_[i].back());
                 obstacles_[i].pop_back();
                 obstacles_[i].push_back({GAMESCREEN_WIDTH, curr_y});
             } else if (obstacles_[i][j].x > GAMESCREEN_WIDTH and lane_velocity[i] > 0){
                 auto curr_y = obstacles_[i][j].y;
-                //obstacles_[i][j] = std::move(obstacles_[i].back());
                 std::swap(obstacles_[i][j],obstacles_[i].back());
                 obstacles_[i].pop_back();
                 obstacles_[i].push_back({0-obstacle_dims[i].first, curr_y});
@@ -225,6 +200,24 @@ namespace frogger{
         frog_ = {{GAMESCREEN_WIDTH/2,GAMESCREEN_HEIGHT-CELLSIZE},Direction::up};
         update_game_state();
     }
+
+    void Model::check_for_frog_death(int curr_lane){
+        bool check = false;
+        if(curr_lane > 0 and curr_lane <= 4){
+            check = frog_collide(curr_lane);
+        }
+        else if(curr_lane < 9 and curr_lane >= 6){
+            check = frog_drown(curr_lane);
+        }
+
+        if(check){
+            kill_frog();
+        }
+
+        update_game_state();
+    }
+
+
 }
 
 

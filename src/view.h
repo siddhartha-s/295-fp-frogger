@@ -45,6 +45,7 @@ namespace frogger{
         ge211::Image_sprite const truck1_ = ge211::Image_sprite("truck1.png");
 
         ge211::Image_sprite const safe_space = ge211::Image_sprite("safe_space_2.png");
+        ge211::Image_sprite const river = ge211::Image_sprite("river2.png");
 
         ge211::Image_sprite const hearts = ge211::Image_sprite("heart2.png");
         std::vector<ge211::Image_sprite> obstacle_sprites_ = {safe_space,car1_,car2_,car3_,truck1_,safe_space,turtle_,
