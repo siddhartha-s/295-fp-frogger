@@ -68,6 +68,15 @@ namespace frogger{
         //Updates game as time passes.
         void update(double dt);
 
+        //used for testing ----
+        int call_calculate_lane(){
+            return calculate_lane();
+        }
+
+        //used for testing -----
+        bool call_is_move_valid(Direction input){
+            return is_move_valid(input);
+        }
         //getter for obstacle positions - to be used by view.
         std::vector<std::vector<ge211::Basic_position<Coordinate>>> obstacles() const{
             return obstacles_;

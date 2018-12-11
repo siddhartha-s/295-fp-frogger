@@ -124,7 +124,14 @@ namespace frogger{
 
     bool Model::frog_drown(int lane){
 
-        return !frog_collide(lane);
+        for(auto& obstacle : obstacles_[lane]){
+            if(frog_.position_.x>obstacle.x-5 and
+            frog_.position_.x<obstacle.x+obstacle_dims[lane].first+5){
+                return false;
+            }
+        }
+
+        return true;
     }
 
     void Model::update(double const dt) {
