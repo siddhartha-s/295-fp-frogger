@@ -1,6 +1,7 @@
 # CMake build directories:
 build
 build.*
+cmake-build-debug
 
 # CLion configuration
 .idea/workspace.xml
